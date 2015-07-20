@@ -23,5 +23,10 @@
     "pg": "^4.4.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-connect": "^2.2.0",
+    "gulp-sass": "^2.0.4"
   }
 }
