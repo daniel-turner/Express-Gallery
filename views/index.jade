@@ -1,0 +1,102 @@
+extends ./base_template.jade
+
+block append head
+  link(rel="stylesheet", type="text/css", href="//cdn.jsdelivr.net/jquery.slick/1.5.6/slick.css")
+  link(rel="stylesheet", type="text/css", href="//cdn.jsdelivr.net/jquery.slick/1.5.6/slick-theme.css")
+block prepend body
+  .row
+    div(class="large-3 columns")
+      h1
+        strong
+          | _ARCHITEKT
+        //- img(src="http://placehold.it/400x100&text=Logo")
+    //- div(class="large-9 columns")
+    //-   ul(class="right button-group")
+    //-     li
+    //-       a(href="#" class="button")
+    //-         | Link 1
+    //-     li
+    //-       a(href="#" class="button")
+    //-         | Link 2
+    //-     li
+    //-       a(href="#" class="button")
+    //-         | Link 3
+    //-     li
+    //-       a(href="#" class="button")
+    //-         | Link 4
+  .row
+    //- div(class="large-12 columns")
+    div(class="slick-slider")
+      div(class='sliderImg')
+        img(src=images[0].link)
+      div(class='sliderImg')
+        img(src=images[1].link)
+      div(class='sliderImg')
+        img(src=images[2].link)
+      //- ul(class="example-orbit"  "data-orbit")
+      //-   li
+      //-     div
+      //-       img(src=images[0].link)
+      //-   li
+      //-     div
+      //-       img(src=images[1].link)
+      //-   li
+      //-     div
+      //-       img(src=images[2].link)
+  hr
+  .row
+    .row
+      div(class="large-4 columns")
+        img(src=images[3].link)
+        h4
+          This is a content section.
+        p
+          | Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.
+      div(class="large-4 columns")
+        img(src=images[4].link)
+        h4
+          This is a content section.
+        p
+          | Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.
+      div(class="large-4 columns")
+        img(src=images[5].link)
+        h4
+          This is a content section.
+        p
+          | Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.
+    .row
+    div(class="large-4 columns")
+      img(src=images[6].link)
+      h4
+        This is a content section.
+      p
+        | Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.
+    div(class="large-4 columns")
+      img(src=images[7].link)
+      h4
+        This is a content section.
+      p
+        | Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.
+    div(class="large-4 columns")
+      img(src=images[8].link)
+      h4
+        This is a content section.
+      p
+        | Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.
+
+  .row
+    div(class="large-12 columns")
+      .panel
+        h4
+          | Get in touch!
+        .row
+          div(class="large-9 columns")
+            p
+              | We'd love to hear from you, you attractive person you.
+          div(class="large-3 columns")
+            a(href="#", class="radius button right")
+              | Contact Us
+block append bodyend
+  script(type="text/javascript", src="//cdn.jsdelivr.net/jquery.slick/1.5.6/slick.min.js")
+  script
+    | $(document).ready(function(){$('.slick-slider').slick({variableWidth:true,adaptiveHeight:true});});

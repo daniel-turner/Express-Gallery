@@ -14,7 +14,11 @@ app.get('/', function (req, res) {
   db.image.findAll()
     .then(function(images) {
 
-      res.json(images);
+      // res.json(images);
+      res.render("index", {
+
+        images: images
+      });
     });
 });
 
@@ -35,7 +39,11 @@ app.get('/gallery/:id', function (req, res) {
       res.send("Could not locate the requested resource.");
     } else {
 
-      res.json(image);
+      // res.json(image);
+      res.render("single_image", {
+
+        image: image[0]
+      });
     }
   });
 });

@@ -6,3 +6,18 @@ $dark-color : #333333;
 body {
   background: $dark-color;
 }
+
+.slick-slider {
+
+  width: 1000px;
+  height: 400px;
+}
+
+.slick-slide {
+
+  width: 1000px;
+  height: 400px;
+  img {
+    text-align: center;
+  };
+}

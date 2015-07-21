@@ -1,0 +1,10 @@
+extends ./base_template.jade
+
+block prepend body
+  #bodyContainer
+    #imageContainer
+      img(src=image.link)
+    block textContainer
+      #textContainer
+        span= image.author
+        span= image.description
