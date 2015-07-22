@@ -1,0 +1,35 @@
+extends ./single_image.jade
+
+mixin form_row
+  .row
+    div(class="large-3 columns")
+      label
+        | Author
+        input(type="text" placeholder=image.author, name="author")
+    div(class="large-3 columns")
+      label
+        | Link
+        input(type="text" placeholder=image.link, name="link")
+  .row
+    div(class="large-6 columns")
+      label
+        | Description
+        input(type="text" placeholder=image.description, name="description")
+    div
+      input(type="hidden", name="id" readonly value=image.id)
+  .row
+    div(class="large-6 columns")
+      a(href="#", onclick="document.getElementById('post_form').submit()", class="button")
+        | Submit
+    div
+      a(href="/", class="button")
+        | Cancel
+
+block append display_or_edit_block
+  case image.id
+    when undefined
+      form(id="post_form", action="/gallery" method="post")
+        +form_row
+    default
+      form(id="post_form", action="/gallery" method="put")
+        +form_row

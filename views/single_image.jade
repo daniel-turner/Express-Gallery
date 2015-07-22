@@ -1,10 +1,23 @@
-extends ./base_template.jade
+extends ./header.jade
 
-block prepend body
-  #bodyContainer
-    #imageContainer
-      img(src=image.link)
-    block textContainer
-      #textContainer
-        span= image.author
-        span= image.description
+block append body
+  hr
+  .row
+    if image.link !== "URL here!"
+      div(class="large-6 columns")
+        .image_container
+          img(src=image.link)
+    div(class="large-6 columns")
+      block display_or_edit_block
+      //- .text_container
+      //-   .author_container
+      //-     span= image.author
+      //-   .description_container
+      //-     span= image.description
+      //- .button_container
+      //-   div
+      //-     a(href="#", class="button")
+      //-       | Edit
+      //-   div
+      //-     a(href="#", class="button")
+      //-       | Delete

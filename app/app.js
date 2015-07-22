@@ -40,7 +40,7 @@ app.get('/gallery/:id', function (req, res) {
     } else {
 
       // res.json(image);
-      res.render("single_image", {
+      res.render("single_image_display", {
 
         image: image[0]
       });
@@ -50,7 +50,14 @@ app.get('/gallery/:id', function (req, res) {
 
 app.get('/new_photo', function (req, res) {
 
-  res.send('Got a GET for a page for loading new image');
+  res.render("single_image_edit", {
+
+    image: {
+      author: "Your name!",
+      link: "URL here!",
+      description: "Describe your image here!"
+    }
+  });
 });
 
 app.get('/gallery/:id/edit', function (req, res) {
@@ -61,15 +68,21 @@ app.get('/gallery/:id/edit', function (req, res) {
 
       id: req.params.id
     }
-  }). then(function(image) {
+  }).then(function(image) {
 
     if(image.length < 1) {
 
       res.status(404);
       res.send("Could not locate the requested resource.");
+
+    } else {
+
+      res.render("single_image_edit", {
+
+        image: image[0]
+      });
     }
   });
-  res.send('Got a GET for editing an existing image');
 });
 
 app.post('/gallery', function (req, res) {
@@ -80,9 +93,21 @@ app.post('/gallery', function (req, res) {
     link: req.body.link,
     description: req.body.description
 
+  }).then(function() {
+
+    db.image.findAll({
+
+      where: {
+
+        id: req.params.id
+      }
+    });
   }).then(function(image) {
 
-    res.json(image);
+    res.render("single_image_display", {
+
+      image: image[0]
+    });
   });
 });
 
@@ -128,9 +153,10 @@ app.put('/gallery/:id', function (req, res) {
 
     }).then(function() {
 
-      console.log(image);
+      res.render("single_image_display", {
 
-      res.json(image);
+        image: image
+      });
     });
   });
 });
@@ -156,7 +182,15 @@ app.delete('/gallery/:id', function (req, res) {
 
       image[0].destroy().then(function() {
 
-        res.end();
+        db.image.findAll()
+        .then(function(images) {
+
+          // res.json(images);
+          res.render("index", {
+
+            images: images
+          });
+        });
       });
     }
   });

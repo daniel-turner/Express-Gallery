@@ -7,17 +7,54 @@ body {
   background: $dark-color;
 }
 
+.title_text {
+
+  color: #938888;
+}
+
+.header_text_container {
+  margin-left: 60px;
+  text-align: left;
+  font-size: 12px;
+  color: #938888;
+}
+
 .slick-slider {
 
   width: 1000px;
-  height: 400px;
+  height: 250px;
+  text-align: center;
 }
 
 .slick-slide {
 
   width: 1000px;
-  height: 400px;
+  height: 250px;
+  background: black;
   img {
     text-align: center;
   };
+}
+
+.sliderImg img {
+
+  display: inline-block;
+  // width: 250px;
+  height: 550px;
+}
+
+.image_container {
+
+  // width: 50px;
+  // length:50px;
+  img {
+    height: 100%;
+    width: 100%;
+  }
+}
+
+.button {
+
+  margin: 100px;
+  padding: 100px;
 }
