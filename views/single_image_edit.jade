@@ -5,16 +5,16 @@ mixin form_row
     div(class="large-3 columns")
       label
         | Author
-        input(type="text" placeholder=image.author, name="author")
+        input(type="text" placeholder=image.author, name="author", value=image.author)
     div(class="large-3 columns")
       label
         | Link
-        input(type="text" placeholder=image.link, name="link")
+        input(type="text" placeholder=image.link, name="link", value=image.link)
   .row
     div(class="large-6 columns")
       label
         | Description
-        input(type="text" placeholder=image.description, name="description")
+        input(type="text" placeholder=image.description, name="description", value=image.description)
     div
       input(type="hidden", name="id" readonly value=image.id)
   .row
@@ -25,11 +25,17 @@ mixin form_row
       a(href="/", class="button")
         | Cancel
 
+block append head
+  link(rel="stylesheet", type="text/css" href="../../css/styles.css")
+  link(rel="stylesheet", href="../../bower_components/foundation/css/foundation.css")
+  script(src="../../bower_components/modernizr/modernizr.js")
+
 block append display_or_edit_block
   case image.id
     when undefined
       form(id="post_form", action="/gallery" method="post")
         +form_row
     default
-      form(id="post_form", action="/gallery" method="put")
+      form(id="post_form", action="/gallery" method="post")
         +form_row
+        input(type="hidden", name="method",value="put")

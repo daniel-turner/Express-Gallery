@@ -2,11 +2,34 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var db = require('../models');
+var redactor = require("../lib/redactor.js");
+var method_override = require('method-override');
 
 app.use(express.static('public'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(method_override(function(req,res) {
+
+  if(req.body.method === "put") {
+
+    // req.body._method = "PUT";
+    req.url = req.url + "/" + req.body.id;
+
+    return "PUT";
+
+  } else if(req.body.method === "delete") {
+
+    // req.body._method = "DELETE";
+    // req.url = req.url + "/" + req.body.id;
+
+    return "DELETE";
+  }
+}));
+
+app.use(redactor);
+
 app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
@@ -93,20 +116,20 @@ app.post('/gallery', function (req, res) {
     link: req.body.link,
     description: req.body.description
 
-  }).then(function() {
+  }).then(function(image) { //may be unnecessary
 
     db.image.findAll({
 
       where: {
 
-        id: req.params.id
+        id: image.id
       }
-    });
-  }).then(function(image) {
+    }).then(function(image) {
 
-    res.render("single_image_display", {
+      res.render("single_image_display", {
 
-      image: image[0]
+        image: image[0]
+      });
     });
   });
 });
@@ -151,7 +174,7 @@ app.put('/gallery/:id', function (req, res) {
 
       fields: ['author','link','description']
 
-    }).then(function() {
+    }).then(function(image) {
 
       res.render("single_image_display", {
 
@@ -171,7 +194,7 @@ app.delete('/gallery/:id', function (req, res) {
     }
   }).then(function(image) {
 
-    console.log(image);
+    // console.log(image);
 
     if(image.length < 1) {
 

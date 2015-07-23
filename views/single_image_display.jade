@@ -1,6 +1,9 @@
 extends ./single_image.jade
 
 block append display_or_edit_block
+  form(id="delete_form", method="post" action="/gallery/" + image.id)
+    input(type="hidden", name="method",value="delete")
+    input(type="hidden", name="id",value=image.id)
   form(id="user_submit_form", method="get")
     .text_container
       .author_container
@@ -9,12 +12,12 @@ block append display_or_edit_block
         span= image.description
     .button_container
       div
-        a(href=image.id+"/edit", class="button")
+        a(href="../gallery/"+image.id+"/edit", class="button")
           | Edit
         //- a(href="", onclick="location.href='/gallery/' + image.id + '/edit';return false;" class="button")
           //- | Edit
       div
-        a(href="#", class="button")
+        a(href="#", onclick="document.getElementById('delete_form').submit()", class="button")
           | Delete
       div
         a(href="/", class="button")
