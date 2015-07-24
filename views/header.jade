@@ -3,13 +3,53 @@ extends ./base_template.jade
 block prepend body
   hr(class="hr_separator")
   .row
-    div(class="large-3 columns")
+    div(class="large-4 columns")
       h1
         strong
           span(class="title_text")
             | _ARCHITEKT
-    div(class="large-3 columns")
+    //- div(class="large-3 columns")
     div(class="large-6 columns")
       .header_text_container
         span(class="headerText")
           | Welcome to our online portfolio. We are a small button-group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow our innovative steps.
+    div(class="large-2 columns")
+      .login_logout_container
+        -if (user === undefined)
+          a(href="#", data-reveal-id="create_user_modal", class="login_button_tiny")
+            span(class="login_logout")
+              | Create an account
+          br
+          a(href="#", data-reveal-id="login_modal", class="login_button_tiny")
+            span(class="login_logout")
+              | Log In
+          div(id="create_user_modal", class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
+            h2(id="modalTitle")
+              | Register
+            form(action="/createUser" method="post")
+              label
+                | Username
+              input(type="text" name="username")
+              label
+                | Password
+              input(type="password" name="password")
+              input(type="submit" value="Create")
+            a(class="close-reveal-modal", aria-label="Close")
+              | &#215;
+          div(id="login_modal", class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
+            h2(id="modalTitle")
+              | Log In
+            form(action="/login" method="post")
+              label
+                | Username
+              input(type="text" name="username")
+              label
+                | Password
+              input(type="password" name="password")
+              input(type="submit" value="Submit")
+            a(class="close-reveal-modal", aria-label="Close")
+              | &#215;
+        -else
+          a(href="/logout",class="login_button_tiny")
+            span(class="login_logout")
+              | Log Out

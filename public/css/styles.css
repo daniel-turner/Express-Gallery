@@ -968,3 +968,14 @@ body {
 .button {
   margin: 100px;
   padding: 100px; }
+
+.login_logout_container {
+  float: right; }
+
+.login_logout {
+  font-size: 10px;
+  float: right; }
+
+.scroll_div {
+  overflow-y: scroll;
+  height: 500px; }

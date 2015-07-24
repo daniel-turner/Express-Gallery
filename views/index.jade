@@ -25,50 +25,51 @@ block append body
             img(src=image.link)
   hr(class="hr_separator")
   .row
-    .row
-      div(class="large-4 columns")
-        a(href="/gallery/" + images[3].id)
-          img(src=images[3].link)
-        h4
-          =images[3].author
-        p
-          =images[3].description
-      div(class="large-4 columns")
-        a(href="/gallery/" + images[4].id)
-          img(src=images[4].link)
-        h4
-          =images[4].author
-        p
-          =images[4].description
-      div(class="large-4 columns")
-        a(href="/gallery/" + images[5].id)
-          img(src=images[5].link)
-        h4
-          =images[5].author
-        p
-          =images[5].description
-    .row
-      div(class="large-4 columns")
-        a(href="/gallery/" + images[6].id)
-          img(src=images[6].link)
-        h4
-          =images[6].author
-        p
-          =images[6].description
-      div(class="large-4 columns")
-        a(href="/gallery/" + images[7].id)
-          img(src=images[7].link)
-        h4
-          =images[7].author
-        p
-          =images[7].description
-      div(class="large-4 columns")
-        a(href="/gallery/" + images[8].id)
-          img(src=images[8].link)
-        h4
-          =images[8].author
-        p
-          =images[8].description
+    .scroll_div
+      .row
+        div(class="large-4 columns")
+          a(href="/gallery/" + images[3].id)
+            img(src=images[3].link)
+          h4
+            =images[3].author
+          p
+            =images[3].description
+        div(class="large-4 columns")
+          a(href="/gallery/" + images[4].id)
+            img(src=images[4].link)
+          h4
+            =images[4].author
+          p
+            =images[4].description
+        div(class="large-4 columns")
+          a(href="/gallery/" + images[5].id)
+            img(src=images[5].link)
+          h4
+            =images[5].author
+          p
+            =images[5].description
+      .row
+        div(class="large-4 columns")
+          a(href="/gallery/" + images[6].id)
+            img(src=images[6].link)
+          h4
+            =images[6].author
+          p
+            =images[6].description
+        div(class="large-4 columns")
+          a(href="/gallery/" + images[7].id)
+            img(src=images[7].link)
+          h4
+            =images[7].author
+          p
+            =images[7].description
+        div(class="large-4 columns")
+          a(href="/gallery/" + images[8].id)
+            img(src=images[8].link)
+          h4
+            =images[8].author
+          p
+            =images[8].description
   .row
     div(class="large-12 columns")
       .submit_container

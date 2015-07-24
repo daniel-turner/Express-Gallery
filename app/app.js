@@ -58,6 +58,10 @@ passport.deserializeUser(function(id, done) {
 
   db.user.findById(id).then( function(user){
 
+    app.locals.user = user;
+
+    console.log("deserialize");
+
     done(null, user);
   });
 });
@@ -66,20 +70,11 @@ passport.use(new LocalStrategy(
 
   function(username, password, done) {
 
-    db.user.findOne({ username: username }
+    db.user.findOne({ where: {username: username} }
 
     ).then(function(user) {
 
-      // if (error) {
-
-      //   console.log(error);
-
-      //   return done(error);
-      // }
-
       if (!user) {
-
-        console.log("Unknown username");
 
         return done(null, false, { message: 'Unknown username.' });
       }
@@ -93,22 +88,20 @@ passport.use(new LocalStrategy(
 
       if (!match) {
 
-        console.log("DB Password: " + user.password);
-        console.log("Submitted Hash Password: " + getHash(password));
-        console.log("Password: " + password);
-
-
-        console.log("Incorrect password");
-
         return done(null, false, { message: 'Incorrect password.' });
       }
-
-      console.log("SUCCESS!");
 
       return done(null, user);
     });
   }
 ));
+
+app.use(function(req,res,next) {
+
+  app.locals.user = req.user;
+
+  next();
+});
 
 app.use(redactor);
 
