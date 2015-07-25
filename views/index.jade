@@ -4,77 +4,89 @@ block append head
   link(rel="stylesheet", type="text/css", href="//cdn.jsdelivr.net/jquery.slick/1.5.6/slick.css")
   link(rel="stylesheet", type="text/css", href="//cdn.jsdelivr.net/jquery.slick/1.5.6/slick-theme.css")
 block append body
-  //- hr(class="hr_separator")
-  //- .row
-  //-   div(class="large-3 columns")
-  //-     h1
-  //-       strong
-  //-         span(class="title_text")
-  //-           | _ARCHITEKT
-  //-   div(class="large-3 columns")
-  //-   div(class="large-6 columns")
-  //-     .header_text_container
-  //-       span(class="headerText")
-  //-         | Welcome to our online portfolio. We are a small button-group of passionate designers and architects, looking to change and create amazing digital images to inspire others to follow our innovative steps.
   .row
     //- div(class="large-12 columns")
     div(class="slick-slider")
       each image in images
         div(class='sliderImg')
-          a(href="/gallery/" + image.id)
-            img(src=image.link)
+          a(data-reveal-id="slider_edit_modal" + image.id, href="/gallery/" + image.id)
+            img(id="slider_image"+image.id, src=image.link)
+          div(id="slider_edit_modal" + image.id, class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
+            .row
+              if image.link !== "URL here!"
+                div(class="large-9 columns")
+                  .image_container
+                    img(class="single_display_image", src=image.link)
+              div(class="large-3 columns")
+                form(id="delete_form", method="post" action="/gallery/" + image.id)
+                  input(type="hidden", name="method",value="delete")
+                  input(type="hidden", name="id",value=image.id)
+                form(class="user_submit_form", method="post" action="/gallery/" + image.id)
+                  .text_container
+                    input(type="hidden", name="method",value="put")
+                    .author_container
+                      input(id="slider_modal_author"+image.id,readonly, type="text", name="author",value=image.author)
+                      //- span= image.author
+                    .description_container
+                      input(id="slider_modal_description"+image.id,readonly, type="text", name="description",value=image.description)
+                      //- span= image.description
+                    .link_container
+                      input(id="slider_modal_link"+image.id,readonly, type="text", name="link",value=image.link)
+                      //- span= image.link
+                  .button_container
+                    div
+                      a(href="#", class="small button edit_slider_image")
+                        | Edit
+                    div
+                      a(href="#", onclick="document.getElementById('delete_form').submit()", class="small button")
+                        | Delete
+              a(class="close-reveal-modal", aria-label="Close")
+                | &#215;
   hr(class="hr_separator")
   .row
     .scroll_div
-      .row
-        div(class="large-4 columns")
-          a(href="/gallery/" + images[3].id)
-            img(src=images[3].link)
-          h4
-            =images[3].author
-          p
-            =images[3].description
-        div(class="large-4 columns")
-          a(href="/gallery/" + images[4].id)
-            img(src=images[4].link)
-          h4
-            =images[4].author
-          p
-            =images[4].description
-        div(class="large-4 columns")
-          a(href="/gallery/" + images[5].id)
-            img(src=images[5].link)
-          h4
-            =images[5].author
-          p
-            =images[5].description
-      .row
-        div(class="large-4 columns")
-          a(href="/gallery/" + images[6].id)
-            img(src=images[6].link)
-          h4
-            =images[6].author
-          p
-            =images[6].description
-        div(class="large-4 columns")
-          a(href="/gallery/" + images[7].id)
-            img(src=images[7].link)
-          h4
-            =images[7].author
-          p
-            =images[7].description
-        div(class="large-4 columns")
-          a(href="/gallery/" + images[8].id)
-            img(src=images[8].link)
-          h4
-            =images[8].author
-          p
-            =images[8].description
-  .row
-    div(class="large-12 columns")
-      .submit_container
-        a(href="/new_photo",class="button")
-          | Submit a new image!
+      ul(class="small-block-grid-2 medium-block-grid-3 large-block-grid-4")
+        - while(images.length > 0)
+          li(class="imageLI")
+            -image = images.pop()
+            a(id="list_modal_anchor" + image.id, data-reveal-id="list_edit_modal" + image.id, href="/gallery/" + image.id)
+              img(id="list_image"+image.id, src=image.link)
+            div(id="list_edit_modal"+ image.id, class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
+              .row
+              if image.link !== "URL here!"
+                div(class="large-9 columns")
+                  .image_container
+                    img(class="list_image", src=image.link)
+              div(class="large-3 columns")
+                form(id="delete_form", method="post" action="/gallery/" + image.id)
+                  input(type="hidden", name="method",value="delete")
+                  input(type="hidden", name="id",value=image.id)
+                form(id="user_submit_form", method="put" action="/gallery/" + image.id)
+                  .text_container
+                    input(type="hidden", name="method",value="put")
+                    .author_container
+                      input(id="list_modal_author"+image.id,readonly, type="text", name="author",value=image.author)
+                      //- span= image.author
+                    .description_container
+                      input(id="list_modal_description"+image.id,readonly, type="text", name="description",value=image.description)
+                      //- span= image.description
+                    .link_container
+                      input(id="list_modal_link"+image.id, readonly, type="text", name="link",value=image.link)
+                      //- span= image.link
+                  .button_container
+                    div
+                      //- a(href="../gallery/"+image.id+"/edit", onclick="test();",class="small button")
+                      a(href="#",class="small button edit_list_image")
+                        | Edit
+                    div
+                      a(href="#", onclick="document.getElementById('delete_form').submit()", class="small button")
+                        | Delete
+              a(class="close-reveal-modal", aria-label="Close")
+                | &#215;
+            h4(id="author_tag"+image.id)
+              =image.author
+            p(id="description_tag"+image.id)
+              =image.description
   //- .row
   //-   div(class="large-12 columns")
   //-     .panel
@@ -91,3 +103,4 @@ block append bodyend
   script(type="text/javascript", src="//cdn.jsdelivr.net/jquery.slick/1.5.6/slick.min.js")
   script
     | $(document).ready(function(){$('.slick-slider').slick({infinite:true,variableWidth:true,adaptiveHeight:true,centerMode:true,slidesToShow:3,slidesToScroll:1,autoplay: true,autoplaySpeed: 1500});});
+

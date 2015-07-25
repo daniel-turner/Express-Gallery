@@ -19,6 +19,12 @@ function getHash(password) {
   return hash_algorithm.digest(HASH_ENCODING);
 }
 
+function ensureAuthenticated(req, res, next) {
+
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
+
 app.use(session(
   {
     secret: 'keyboard cat',
@@ -39,11 +45,14 @@ app.use(method_override(function(req,res) {
 
   if(req.body.method === "put") {
 
-    req.url = req.url + "/" + req.body.id;
+    // req.url = req.url + "/" + req.body.id;
+    console.log("Converting POST to PUT");
 
     return "PUT";
 
   } else if(req.body.method === "delete") {
+
+    console.log("Converting POST to DELETE");
 
     return "DELETE";
   }
@@ -112,10 +121,10 @@ app.post('/login',
                                    failureRedirect: '/login'})
 );
 
-app.get('/login', function (req, res) {
+// app.get('/login', function (req, res) {
 
-  res.render('login');
-});
+//   res.render('login');
+// });
 
 app.get('/logout', function(req, res){
 
@@ -123,10 +132,10 @@ app.get('/logout', function(req, res){
   res.redirect('/');
 });
 
-app.get('/createUser', function(req,res) {
+// app.get('/createUser', function(req,res) {
 
-  res.render("create_user");
-});
+//   res.render("create_user");
+// });
 
 app.post('/createUser', function(req, res) {
 
@@ -173,6 +182,7 @@ app.get('/', function (req, res) {
   db.image.findAll()
     .then(function(images) {
 
+      // res.send(200,images);
       // res.json(images);
       res.render("index", {
 
@@ -199,11 +209,12 @@ app.get('/gallery/:id', function (req, res) {
       res.send("Could not locate the requested resource.");
     } else {
 
+      res.send(200, image);
       // res.json(image);
-      res.render("single_image_display", {
+      // res.render("single_image_display", {
 
-        image: image[0]
-      });
+      //   image: image[0]
+      // });
     }
   });
 });
@@ -237,10 +248,13 @@ app.get('/gallery/:id/edit', ensureAuthenticated, function (req, res) {
 
     } else {
 
-      res.render("single_image_edit", {
+      res.send(200, image[0]);
+      // res.json(image[0]);
 
-        image: image[0]
-      });
+      // res.render("single_image_edit", {
+
+      //   image: image[0]
+      // });
     }
   });
 });
@@ -263,10 +277,13 @@ app.post('/gallery', function (req, res) {
       }
     }).then(function(image) {
 
-      res.render("single_image_display", {
+      res.send(200, image[0]);
+      // res.json(image[0]);
 
-        image: image[0]
-      });
+      // res.render("single_image_display", {
+
+      //   image: image[0]
+      // });
     });
   });
 });
@@ -313,10 +330,13 @@ app.put('/gallery/:id', ensureAuthenticated, function (req, res) {
 
     }).then(function(image) {
 
-      res.render("single_image_display", {
+      res.send(200,image);
+      // res.json(image);
 
-        image: image
-      });
+      // res.render("single_image_display", {
+
+      //   image: image
+      // });
     });
   });
 });
@@ -345,22 +365,17 @@ app.delete('/gallery/:id', ensureAuthenticated, function (req, res) {
         db.image.findAll()
         .then(function(images) {
 
+          res.send(200,images);
           // res.json(images);
-          res.render("index", {
+          // res.render("index", {
 
-            images: images
-          });
+          //   images: images
+          // });
         });
       });
     }
   });
 });
-
-function ensureAuthenticated(req, res, next) {
-
-  if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
-}
 
 var server = app.listen(3000, function() {
 

@@ -7,7 +7,7 @@ block prepend body
       h1
         strong
           span(class="title_text")
-            | _ARCHITEKT
+            | _ASTROTEKH
     //- div(class="large-3 columns")
     div(class="large-6 columns")
       .header_text_container
@@ -50,6 +50,15 @@ block prepend body
             a(class="close-reveal-modal", aria-label="Close")
               | &#215;
         -else
+          a(href="#",class="login_button_tiny")
+            span(class="login_logout")
+              =user.username
+          br
+          //- a(href="/new_photo",class="login_button_tiny")
+          a(href="#",class="login_button_tiny")
+            span(class="login_logout")
+              | Submit a new image!
+          br
           a(href="/logout",class="login_button_tiny")
             span(class="login_logout")
               | Log Out
