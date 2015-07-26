@@ -1,5 +1,40 @@
 (function() {
 
+  function updateImage(response){
+
+    console.log(response);
+
+    $('.src_img_link'+response.id).each(function(){
+
+      $(this).attr('src', response.link);
+    });
+
+    $('.author_value'+response.id).each(function() {
+
+      $(this).attr('value', response.author);
+    });
+
+    $('.description_value'+response.id).each(function() {
+
+      $(this).attr('value', response.description);
+    });
+
+    $('.link_value'+response.id).each(function() {
+
+      $(this).attr('value', response.link);
+    });
+
+    $('#author_tag'+response.id).html(response.author);
+    $('#description_tag'+response.id).html(response.description);
+  };
+
+  function updateImages(response) {
+
+    $('#slider_image'+response.id).remove();
+    $('#imageLI'+response.id).remove();
+
+  };
+
   $('.edit_list_image').click(function(event) {
 
     event.preventDefault();
@@ -31,7 +66,7 @@
 
       }).error(function(error) {
 
-        alert(error);
+        alert(response.statusCode);
       });
     }
   });
@@ -72,36 +107,23 @@
     }
   });
 
-  function updateImage(response){
+  $('.delete_button').click(function(event) {
 
-    console.log(response);
+    event.preventDefault();
 
-    var modal = $('#slider_edit_modal' + response.id);
-    modal.find('.single_display_image').attr('src',response.link);
+    var form = $(this).closest('form.delete_form');
+    var data = form.serialize();
 
-    var slider_image = $('#slider_image'+response.id);
-    slider_image.attr('src', response.link);
+    console.log($(form).attr('action'));
 
-    var list_image = $('#list_image' + response.id);
-    list_image.attr('src', response.link);
+    $.post(form.attr('action'), data, function(response) {
 
-    var slider_modal_link = $('#slider_modal_link' + response.id);
-    slider_modal_link.attr('value', response.link);
-    var slider_modal_author = $('#slider_modal_author' + response.id);
-    slider_modal_author.attr('value', response.author);
-    var slider_modal_description = $('#slider_modal_description'+ response.id);
-    slider_modal_description.attr('value', response.description);
+      updateImages(response);
 
-    var list_modal_link = $('#list_modal_link' + response.id);
-    list_modal_link.attr('value', response.link);
-    var list_modal_author = $('#list_modal_author' + response.id);
-    list_modal_author.attr('value', response.author);
-    var list_modal_description = $('#list_modal_description'+ response.id);
-    list_modal_description.attr('value', response.description);
+    }).error(function(error) {
 
-    var author_text = $('#author_tag'+response.id);
-    author_text.innerHTML = response.author;
-    var description_text = $('#description_tag'+response.id);
-    description_text.innerHTML = response.description;
-  };
+      alert(error);
+      console.log(error);
+    });
+  });
 })()

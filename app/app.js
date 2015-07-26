@@ -121,21 +121,11 @@ app.post('/login',
                                    failureRedirect: '/login'})
 );
 
-// app.get('/login', function (req, res) {
-
-//   res.render('login');
-// });
-
 app.get('/logout', function(req, res){
 
   req.logout();
   res.redirect('/');
 });
-
-// app.get('/createUser', function(req,res) {
-
-//   res.render("create_user");
-// });
 
 app.post('/createUser', function(req, res) {
 
@@ -161,7 +151,6 @@ app.post('/createUser', function(req, res) {
         db.image.findAll()
           .then(function(images) {
 
-            // res.json(images);
             res.render("index", {
 
               images: images
@@ -182,8 +171,6 @@ app.get('/', function (req, res) {
   db.image.findAll()
     .then(function(images) {
 
-      // res.send(200,images);
-      // res.json(images);
       res.render("index", {
 
         images: images
@@ -209,12 +196,8 @@ app.get('/gallery/:id', function (req, res) {
       res.send("Could not locate the requested resource.");
     } else {
 
-      res.send(200, image);
-      // res.json(image);
-      // res.render("single_image_display", {
-
-      //   image: image[0]
-      // });
+      res.status(200);
+      res.send(image);
     }
   });
 });
@@ -248,13 +231,8 @@ app.get('/gallery/:id/edit', ensureAuthenticated, function (req, res) {
 
     } else {
 
-      res.send(200, image[0]);
-      // res.json(image[0]);
-
-      // res.render("single_image_edit", {
-
-      //   image: image[0]
-      // });
+      res.status(200);
+      res.send(image[0]);
     }
   });
 });
@@ -277,13 +255,8 @@ app.post('/gallery', function (req, res) {
       }
     }).then(function(image) {
 
-      res.send(200, image[0]);
-      // res.json(image[0]);
-
-      // res.render("single_image_display", {
-
-      //   image: image[0]
-      // });
+      res.status(200);
+      res.send(image[0]);
     });
   });
 });
@@ -298,8 +271,6 @@ app.put('/gallery/:id', ensureAuthenticated, function (req, res) {
     }
 
   }).then(function(image){
-
-    // console.log(image[0].dataValues);
 
     if(image.length < 1) {
 
@@ -322,36 +293,30 @@ app.put('/gallery/:id', ensureAuthenticated, function (req, res) {
       image[0].dataValues.description = req.body.description;
     }
 
-    // console.log(image[0].dataValues);
-
     image[0].save({
 
       fields: ['author','link','description']
 
     }).then(function(image) {
 
-      res.send(200,image);
-      // res.json(image);
-
-      // res.render("single_image_display", {
-
-      //   image: image
-      // });
+      res.status(200);
+      res.send(image);
     });
   });
 });
 
 app.delete('/gallery/:id', ensureAuthenticated, function (req, res) {
 
+  var id = req.params.id;
+
   db.image.findAll({
 
     where: {
 
-      id: req.params.id
+      id: id
     }
-  }).then(function(image) {
 
-    // console.log(image);
+  }).then(function(image) {
 
     if(image.length < 1) {
 
@@ -365,12 +330,9 @@ app.delete('/gallery/:id', ensureAuthenticated, function (req, res) {
         db.image.findAll()
         .then(function(images) {
 
-          res.send(200,images);
-          // res.json(images);
-          // res.render("index", {
-
-          //   images: images
-          // });
+          res.status(200);
+          res.id = id;
+          res.send(images);
         });
       });
     }

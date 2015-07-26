@@ -55,9 +55,25 @@ block prepend body
               =user.username
           br
           //- a(href="/new_photo",class="login_button_tiny")
-          a(href="#",class="login_button_tiny")
+          a(href="#",class="login_button_tiny", data-reveal-id="create_modal")
             span(class="login_logout")
               | Submit a new image!
+          div(id="create_modal", class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
+            h2(id="modalTitle")
+              | Create entry
+            form(action="/gallery" method="post")
+              label
+                | Author
+              input(type="text" name="author")
+              label
+                | Link
+              input(type="text" name="link")
+              label
+                | Description
+              input(type="text" name="description")
+              input(type="submit" value="Submit")
+            a(class="close-reveal-modal", aria-label="Close")
+              | &#215;
           br
           a(href="/logout",class="login_button_tiny")
             span(class="login_logout")

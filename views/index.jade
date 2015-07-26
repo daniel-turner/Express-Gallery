@@ -8,15 +8,15 @@ block append body
     //- div(class="large-12 columns")
     div(class="slick-slider")
       each image in images
-        div(class='sliderImg')
+        div(class='sliderImg', id='slider_image'+image.id)
           a(data-reveal-id="slider_edit_modal" + image.id, href="/gallery/" + image.id)
-            img(id="slider_image"+image.id, src=image.link)
+            img(class="src_img_link"+image.id,id="slider_image"+image.id, src=image.link)
           div(id="slider_edit_modal" + image.id, class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
             .row
               if image.link !== "URL here!"
                 div(class="large-9 columns")
                   .image_container
-                    img(class="single_display_image", src=image.link)
+                    img(class="single_display_image src_img_link"+image.id, src=image.link)
               div(class="large-3 columns")
                 form(id="delete_form", method="post" action="/gallery/" + image.id)
                   input(type="hidden", name="method",value="delete")
@@ -25,20 +25,20 @@ block append body
                   .text_container
                     input(type="hidden", name="method",value="put")
                     .author_container
-                      input(id="slider_modal_author"+image.id,readonly, type="text", name="author",value=image.author)
+                      input(class="author_value"+image.id,readonly, type="text", name="author",value=image.author)
                       //- span= image.author
                     .description_container
-                      input(id="slider_modal_description"+image.id,readonly, type="text", name="description",value=image.description)
+                      input(class="description_value"+image.id,readonly, type="text", name="description",value=image.description)
                       //- span= image.description
                     .link_container
-                      input(id="slider_modal_link"+image.id,readonly, type="text", name="link",value=image.link)
+                      input(class="link_value"+image.id,readonly, type="text", name="link",value=image.link)
                       //- span= image.link
                   .button_container
                     div
                       a(href="#", class="small button edit_slider_image")
                         | Edit
                     div
-                      a(href="#", onclick="document.getElementById('delete_form').submit()", class="small button")
+                      a(href="#", class="small button delete_button")
                         | Delete
               a(class="close-reveal-modal", aria-label="Close")
                 | &#215;
@@ -47,16 +47,16 @@ block append body
     .scroll_div
       ul(class="small-block-grid-2 medium-block-grid-3 large-block-grid-4")
         - while(images.length > 0)
-          li(class="imageLI")
-            -image = images.pop()
+          -image = images.pop()
+          li(class="imageLI", id="imageLI"+image.id)
             a(id="list_modal_anchor" + image.id, data-reveal-id="list_edit_modal" + image.id, href="/gallery/" + image.id)
-              img(id="list_image"+image.id, src=image.link)
+              img(class="src_img_link"+image.id,id="list_image"+image.id, src=image.link)
             div(id="list_edit_modal"+ image.id, class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
               .row
               if image.link !== "URL here!"
                 div(class="large-9 columns")
                   .image_container
-                    img(class="list_image", src=image.link)
+                    img(class="list_image src_img_link"+image.id, src=image.link)
               div(class="large-3 columns")
                 form(id="delete_form", method="post" action="/gallery/" + image.id)
                   input(type="hidden", name="method",value="delete")
@@ -65,13 +65,13 @@ block append body
                   .text_container
                     input(type="hidden", name="method",value="put")
                     .author_container
-                      input(id="list_modal_author"+image.id,readonly, type="text", name="author",value=image.author)
+                      input(class="author_value"+image.id,readonly, type="text", name="author",value=image.author)
                       //- span= image.author
                     .description_container
-                      input(id="list_modal_description"+image.id,readonly, type="text", name="description",value=image.description)
+                      input(class="description_value"+image.id,readonly, type="text", name="description",value=image.description)
                       //- span= image.description
                     .link_container
-                      input(id="list_modal_link"+image.id, readonly, type="text", name="link",value=image.link)
+                      input(class="link_value"+image.id, readonly, type="text", name="link",value=image.link)
                       //- span= image.link
                   .button_container
                     div
@@ -79,13 +79,14 @@ block append body
                       a(href="#",class="small button edit_list_image")
                         | Edit
                     div
-                      a(href="#", onclick="document.getElementById('delete_form').submit()", class="small button")
+                      a(href="#", class="small button delete_button")
                         | Delete
               a(class="close-reveal-modal", aria-label="Close")
                 | &#215;
-            h4(id="author_tag"+image.id)
+            span(id="author_tag"+image.id)
               =image.author
-            p(id="description_tag"+image.id)
+            br
+            span(id="description_tag"+image.id)
               =image.description
   //- .row
   //-   div(class="large-12 columns")
