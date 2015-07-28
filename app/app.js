@@ -46,13 +46,10 @@ app.use(method_override(function(req,res) {
   if(req.body.method === "put") {
 
     // req.url = req.url + "/" + req.body.id;
-    console.log("Converting POST to PUT");
 
     return "PUT";
 
   } else if(req.body.method === "delete") {
-
-    console.log("Converting POST to DELETE");
 
     return "DELETE";
   }
@@ -68,8 +65,6 @@ passport.deserializeUser(function(id, done) {
   db.user.findById(id).then( function(user){
 
     app.locals.user = user;
-
-    console.log("deserialize");
 
     done(null, user);
   });
@@ -325,14 +320,21 @@ app.delete('/gallery/:id', ensureAuthenticated, function (req, res) {
 
     } else {
 
+      var removed_id = image[0].id
+
       image[0].destroy().then(function() {
 
         db.image.findAll()
         .then(function(images) {
 
+          // console.log("DESTROYED ID: " + destroyedID);
+
           res.status(200);
-          res.id = id;
-          res.send(images);
+          // res.setHeader("destroyed_id" = destroyedID);
+          res.send({
+            images: images,
+            removed_id: removed_id
+          });
         });
       });
     }

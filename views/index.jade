@@ -6,7 +6,7 @@ block append head
 block append body
   .row
     //- div(class="large-12 columns")
-    div(class="slick-slider")
+    div(class="slick-slider", id="gallery_slider")
       each image in images
         div(class='sliderImg', id='slider_image'+image.id)
           a(data-reveal-id="slider_edit_modal" + image.id, href="/gallery/" + image.id)
@@ -18,9 +18,6 @@ block append body
                   .image_container
                     img(class="single_display_image src_img_link"+image.id, src=image.link)
               div(class="large-3 columns")
-                form(id="delete_form", method="post" action="/gallery/" + image.id)
-                  input(type="hidden", name="method",value="delete")
-                  input(type="hidden", name="id",value=image.id)
                 form(class="user_submit_form", method="post" action="/gallery/" + image.id)
                   .text_container
                     input(type="hidden", name="method",value="put")
@@ -37,6 +34,10 @@ block append body
                     div
                       a(href="#", class="small button edit_slider_image")
                         | Edit
+                form(class="delete_form", method="post" action="/gallery/" + image.id)
+                  input(type="hidden", name="method",value="delete")
+                  input(type="hidden", name="id",value=image.id)
+                  .button_container
                     div
                       a(href="#", class="small button delete_button")
                         | Delete
@@ -45,7 +46,7 @@ block append body
   hr(class="hr_separator")
   .row
     .scroll_div
-      ul(class="small-block-grid-2 medium-block-grid-3 large-block-grid-4")
+      ul(id="main_list",class="small-block-grid-2 medium-block-grid-3 large-block-grid-4")
         - while(images.length > 0)
           -image = images.pop()
           li(class="imageLI", id="imageLI"+image.id)
@@ -58,9 +59,6 @@ block append body
                   .image_container
                     img(class="list_image src_img_link"+image.id, src=image.link)
               div(class="large-3 columns")
-                form(id="delete_form", method="post" action="/gallery/" + image.id)
-                  input(type="hidden", name="method",value="delete")
-                  input(type="hidden", name="id",value=image.id)
                 form(id="user_submit_form", method="put" action="/gallery/" + image.id)
                   .text_container
                     input(type="hidden", name="method",value="put")
@@ -78,6 +76,10 @@ block append body
                       //- a(href="../gallery/"+image.id+"/edit", onclick="test();",class="small button")
                       a(href="#",class="small button edit_list_image")
                         | Edit
+                form(class="delete_form", method="post" action="/gallery/" + image.id)
+                  input(type="hidden", name="method",value="delete")
+                  input(type="hidden", name="id",value=image.id)
+                  .button_container
                     div
                       a(href="#", class="small button delete_button")
                         | Delete

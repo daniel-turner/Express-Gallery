@@ -61,7 +61,7 @@ block prepend body
           div(id="create_modal", class="reveal-modal", data-reveal aria-labelledby="modalTitle", aria-hidden="true", role="dialog")
             h2(id="modalTitle")
               | Create entry
-            form(action="/gallery" method="post")
+            form(id="create_form",action="/gallery", method="post")
               label
                 | Author
               input(type="text" name="author")
@@ -71,7 +71,7 @@ block prepend body
               label
                 | Description
               input(type="text" name="description")
-              input(type="submit" value="Submit")
+              input(type="submit", value="Submit", id="submit_image_button")
             a(class="close-reveal-modal", aria-label="Close")
               | &#215;
           br
